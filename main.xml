@@ -1,0 +1,21 @@
+<scene version="1.6.0" shadowVolume="200 50 200">
+	<environment template="sunset"/>
+	<script file="main.lua"/>
+	<script file="sandbox.lua"/>
+	<voxbox pos="-25.0 -7.1 -25.0" size="500 1 500"/>
+	<spawnpoint pos="0.0 1.0 -19.2" rot="0 180 0"/>
+	<group pos="-0.8 4.8 9.6" layer="Prefabs">
+		<instance pos="-0.8 0.0 0.0" rot="0.0 0.0 0.0" file="MOD/Prefab/Minecraft/Dirt.xml"/>
+		<instance pos="0.8 0.0 0.0" rot="0.0 0.0 0.0" file="MOD/Prefab/Minecraft/Grass.xml"/>
+		<instance pos="-2.4 0.0 0.0" rot="0.0 0.0 0.0" file="MOD/Prefab/Minecraft/Stone.xml"/>
+		<instance pos="-4.0 0.0 0.0" rot="0.0 0.0 0.0" file="MOD/Prefab/Minecraft/Bedrock.xml"/>
+	</group>
+	<script file="MOD/Script/VoxToWorld.lua" param0="MaxBlocksPerTick=1" param1="DynamicBlocks=true" param2="StaticBlocks=true" param3="MakeDynamic=false">
+		<compound pos="4.3 14.1 32.9">
+			<vox file="MOD/Vox/Minecraft/Worlds/World1.vox" object="World"/>
+		</compound>
+	</script>
+	<script pos="-14.6 0.0 0.0" rot="0.0 0.0 0.0" file="MOD/Script/ConveyerBelt.lua"/>
+	<voxbox tags="Conveyer Direction=1,0,0" pos="-25.5 -6.4 -1.1" size="1287 1 119" offset="-255.0 0.0 -99.0" color="0.35 0.35 0.35"/>
+</scene>
+

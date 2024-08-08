@@ -1,0 +1,9 @@
+<prefab version="1.6.0">
+	<group name="instance=MOD/123.xml" pos="0.0 0.0 0.0" rot="0.0 0.0 0.0">
+		<compound pos="0.0 0.0 0.0">
+			<vox prop="false" file="MOD/Vox/Minecraft/cobblestone.vox" object="block"/>
+			<vox pos="-1.6 0.0 0.0" prop="false" file="MOD/Vox/Minecraft/cobblestone.vox" object="block"/>
+		</compound>
+	</group>
+</prefab>
+
