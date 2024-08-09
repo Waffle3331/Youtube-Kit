@@ -16,6 +16,11 @@
 		</compound>
 	</script>
 	<script pos="-14.6 0.0 0.0" rot="0.0 0.0 0.0" file="MOD/Script/ConveyerBelt.lua"/>
+	<script pos="-14.6 0.0 0.0" rot="0.0 0.0 0.0" file="MOD/Script/Liquify.lua"/>
 	<voxbox tags="Conveyer Direction=1,0,0" pos="-25.5 -6.4 -1.1" size="1287 1 119" offset="-255.0 0.0 -99.0" color="0.35 0.35 0.35"/>
+	<body tags="Liquify" pos="0.0 0.0 -13.8" dynamic="true">
+		<vox pos="0.0 0.0 0.0" file="MOD/Vox/Minecraft/dirt.vox" object="block"/>
+	</body>
+	<vox tags="Liquify" pos="0.0 0.0 -5.5" rot="0.0 0.0 0.0" file="MOD/Vox/Minecraft/grass.vox" object="block"/>
 </scene>
 
