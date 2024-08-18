@@ -1,46 +1,27 @@
 function init()
-	Lasers = FindLights("Laser", true)
+	Lasers = FindShapes("Laser", true)
 
 
 end
 
 function tick(dt)
 	for i=1,#Lasers do 
-		for j=1,1 do 
-			local trans = TransformToParentVec(GetLightTransform(Lasers[i]), Vec(0,0,-1))
-			hit, dist, normal, shape = QueryRaycast(GetLightTransform(Lasers[i]).pos, trans, 120)
-			if hit then
-				local hitpos = VecAdd(GetLightTransform(Lasers[i]).pos, VecScale(trans, dist))
-				MakeHole(hitpos, 0.1, 0.1, 0.1, true)
-				DebugCross(hitpos)
-				DrawLine(GetLightTransform(Lasers[i]).pos,hitpos,1,0,0,1)
-				
-				
-				local trans = TransformToParentVec(hitpos, Vec(0,0,-1))
-				hit2, dist2, normal2, shape2 = QueryRaycast(hitpos, trans, 120)
-				if hit2 then
-					local hitpos2 = VecAdd(hitpos, VecScale(trans, dist2))
-					MakeHole(hitpos, 0.1, 0.1, 0.1, true)
-					DebugCross(hitpos2)
-					DrawLine(hitpos,hitpos2,1,0,0,1)
-				else 
-					DebugLine(hitpos, VecAdd(hitpos, VecScale(trans, 5)), 0, 1, 0, 1) 
-				end
-			else 
-				DebugLine(GetLightTransform(Lasers[i]).pos, VecAdd(GetLightTransform(Lasers[i]).pos, VecScale(trans, 120)), 0, 1, 0, 1) 
-			end
-		end
+		local entry = GetShapePalette(Lasers[i])
+		type, red, green, blue, alpha, reflectivity, shininess, metallic, emissive = GetShapeMaterial(Lasers[i], entry[1])
+		local lights = GetShapeLights(Lasers[i])
+		DrawLine(GetLightTransform(lights[1]).pos,GetLightTransform(lights[2]).pos,red,green,blue,0.8)
+		PointLight(GetLightTransform(lights[1]).pos, red, green, blue, 1)
+		PointLight(GetLightTransform(lights[2]).pos, red, green, blue, 1)
+		TriggerDelete(Lasers[i], {red,green,blue})
 	end
 end
 
-function TriggerDelete(RefShape)
-	local Positions = {}
+function TriggerDelete(RefShape, color)
 	--local MI,MA = GetTriggerBounds(trigger)
 	local size = { GetShapeSize(RefShape) }
 	local MI,MA = TransformToParentPoint(GetShapeWorldTransform(RefShape), VecScale(Vec(0+0.5, 0+0.5, 0+0.5), 0.1)),TransformToParentPoint(GetShapeWorldTransform(RefShape), VecScale(Vec(size[1]+0.5, size[2]+0.5, size[3]+0.5), 0.1))
 	--local RefShape = nil
 	local ShapeList = QueryAabbShapes(MI,MA)
-	DebugPrint(#ShapeList)
 	--for i=1,#ShapeList do
 		--if HasTag(ShapeList[i], "MakeHole") then
 		--	RefShape = ShapeList[i]
@@ -52,20 +33,15 @@ function TriggerDelete(RefShape)
 				local material = { GetShapeMaterialAtIndex(shape, x, y, z) }
 				if material[1] ~= "air" then
 					local transform = TransformToParentPoint(GetShapeWorldTransform(RefShape), VecScale(Vec(x+0.5, y+0.5, z+0.5), 0.1))
-					table.insert(Positions,transform)
-					--DebugCross(transform)
+					QueryRejectShape(RefShape)
+					local amount = QueryAabbShapes(transform,transform)
+					if #amount ~= 0 then
+						local count = MakeHole(transform, 0.1,0.1,0.1)
+						if count ~= 0 then
+							PointLight(transform, color[1], color[2], color[3], 1)
+						end
+					end
 				end
-			end
-		end
-	end
-	DebugPrint(#Positions)
-	DebugPrint(Positions[1])
-	for i=1,#ShapeList do 
-		for j=1,#Positions do 
-			local pos = GetShapeCoord(ShapeList[i],Positions[j])
-			if GetShapeMaterialAtPosition(ShapeList[i], pos) ~= "air" then
-				SetBrush("cube", 1, 0)
-				DrawShapeLine(ShapeList[i], pos[1], pos[2], pos[3], pos[1], pos[2], pos[3], true, false)
 			end
 		end
 	end

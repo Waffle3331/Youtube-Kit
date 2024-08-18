@@ -6,7 +6,7 @@ function tick(dt)
     for i = 1, #Conveyers do 
         local bounds = { GetShapeBounds(Conveyers[i]) }
         local min = Vec(bounds[1][1], bounds[1][2], bounds[1][3])
-        local max = Vec(bounds[2][1], bounds[2][2], bounds[2][3])
+        local max = Vec(bounds[2][1], bounds[2][2]+5, bounds[2][3])
         QueryRejectBody(GetToolBody())
         QueryRejectBody(GetWorldBody())
         local bodies = QueryAabbBodies(min, max)
@@ -19,7 +19,7 @@ function tick(dt)
                     touching = true
                 end
             end
-            if touching then
+            if --[[touching]] true then
                 
 				local speed = tonumber(GetTagValue(Conveyers[i], "Speed")) or 0.01
 				local body = bodies[j]
